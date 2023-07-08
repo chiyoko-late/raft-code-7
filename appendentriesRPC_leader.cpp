@@ -68,7 +68,7 @@ void worker(int &sock_client, int &connectserver_num)
     for (int i = 0; i < ENTRY_NUM; i++)
     {
         strcpy(AERPC_A->entries[i].entry, str);
-        printf("%s", AERPC_A->entries[i].entry);
+        // printf("%s", AERPC_A->entries[i].entry);
     }
 
     for (int i = 0; i < (ALL_ACCEPTED_ENTRIES / ENTRY_NUM); i++)
