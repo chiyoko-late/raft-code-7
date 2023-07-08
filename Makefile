@@ -1,6 +1,6 @@
 
 
-CC = g++ -std=c++11 -pthread
+CC = g++ -std=c++11 -O3 -pthread
 
 All: clean leader followers
 
