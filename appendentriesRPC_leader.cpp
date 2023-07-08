@@ -103,7 +103,7 @@ void worker(int &sock_client, int &connectserver_num)
         }
         clock_gettime(CLOCK_MONOTONIC, &ts4);
             t = ts4.tv_sec - ts3.tv_sec + (ts4.tv_nsec - ts3.tv_nsec) / 1e9;
-    printf("time\n");
+    // printf("time\n");
     printf("%.4f\n", t);
         // my_send(sock_client, &result, sizeof(int) * 1);
         // printf("return commit\n");
