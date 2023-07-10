@@ -19,18 +19,11 @@
 #include <thread>
 #include <mutex>
 #include "my_sock.h"
-// #include <array>
 
 #define SERVER_ADDR "0.0.0.0"
 #define STRING (10LL)
 #define ALL_ACCEPTED_ENTRIES (10000L * 5000L)
 #define ENTRY_NUM (10000L * 5000L)
-
-// using namespace std;
-
-// int STRING = 100;
-// int ALL_ACCEPTED_ENTRIES = 10000;
-// int ENTRY_NUM = 10000;
 
 uint64_t c1,
     c2;
@@ -158,28 +151,3 @@ void read_log()
     }
     return;
 }
-
-// void output_AERPC_A(struct AppendEntriesRPC_Argument *p)
-// {
-//     printf("---appendEntriesRPC---\n");
-//     printf("term: %d\n", p->term);
-//     for (int i = 1; i < ONCE_SEND_ENTRIES; i++)
-//     {
-// std::string output_string(p->entries[i - 1].entry.begin(), p->entries[i - 1].entry.end());
-//         printf("entry: %s\n", output_string.c_str());
-//         // cout << "entry:" << p->entries[i - 1].entry << endl;
-//     }
-//     printf("prevLogIndex: %d-%d\n", p->prevLogIndex[0], p->prevLogIndex[ONCE_SEND_ENTRIES - 1]);
-//     printf("prevLogTerm: %d-%d\n", p->prevLogTerm[0], p->prevLogIndex[ONCE_SEND_ENTRIES - 1]);
-//     printf("LeaderCommitIndex: %d\n", p->leaderCommit);
-//     printf("----------------------\n");
-//     return;
-// }
-
-// void output_AERPC_R(struct AppendEntriesRPC_Result *p)
-// {
-//     printf("**AERPC_R**\n");
-//     printf("term: %d\n", p->term);
-//     printf("bool: %d\n", p->success);
-//     printf("***********\n");
-// }

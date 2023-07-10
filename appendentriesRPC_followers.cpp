@@ -1,9 +1,4 @@
 // ./followers 1234 flog1
-// ./followers 2345 flog2
-// ./ followers 3456 flog3
-// ./ followers 4567 flog4
-// ./ followers 5678 flog5
-
 #include "appendentries.h"
 #include "debug.h"
 
@@ -12,11 +7,7 @@ struct AppendEntriesRPC_Result *AERPC_R = new struct AppendEntriesRPC_Result;
 struct AllServer_PersistentState *as_ps = new struct AllServer_PersistentState;
 struct AllServer_VolatileState *as_vs = new struct AllServer_VolatileState;
 
-int consistency_check(
-    // struct AppendEntriesRPC_Argument *rpc,
-    // struct AllServer_PersistentState *as_ps,
-    // struct AllServer_VolatileState *as_vs
-)
+int consistency_check()
 {
 
     // 1. Reply false if term<currentTerm
@@ -74,47 +65,32 @@ int consistency_check(
         as_vs->commitIndex = rpc->leaderCommit;
     }
     // printf("write log\n");
-
     return true;
 };
 
-int transfer(
-    int sock
-    // struct AppendEntriesRPC_Argument *AERPC_A,
-    // struct AppendEntriesRPC_Result *AERPC_R,
-    // struct AllServer_PersistentState *AS_PS,
-    // struct AllServer_VolatileState *AS_VS
-)
+int transfer(int sock)
 {
-
     /* リーダーから文字列を受信 */
     // printf("try-recv\n");
     my_recv(sock, rpc, sizeof(struct AppendEntriesRPC_Argument));
     // printf("Receiving AppendEntriesRPC is success.\n");
-
     // output_AERPC_A(AERPC_A);
 
     /* consistency check */
-    // clock_gettime(CLOCK_MONOTONIC, &ts1);
     AERPC_R->success = consistency_check();
-    // clock_gettime(CLOCK_MONOTONIC, &ts2);
     AERPC_R->term = as_ps->currentTerm;
     if (AERPC_R->success == false)
     {
         printf("AERPC_R->success == false\n");
         exit(1);
     }
-
     // lerderに返答
     my_send(sock, AERPC_R, sizeof(struct AppendEntriesRPC_Result));
 
-    /* 受信した文字列を表示 */
     // printf("replied to leader. Send AERPC_R\n");
-
     // t = ts2.tv_sec - ts1.tv_sec + (ts2.tv_nsec - ts1.tv_nsec) / 1e9;
     // fprintf(timerec, "%.4f\n", t);
     // printf("%.4f\n", t);
-
     return 0;
 }
 
@@ -166,23 +142,8 @@ int main(int argc, char *argv[])
         exit(0);
     }
     printf("listen success!\n");
-
-    // struct AppendEntriesRPC_Argument *AERPC_A = new struct AppendEntriesRPC_Argument;
-    // struct AppendEntriesRPC_Result *AERPC_R = new struct AppendEntriesRPC_Result;
-    // struct AllServer_PersistentState *AS_PS = new struct AllServer_PersistentState;
-    // struct AllServer_VolatileState *AS_VS = new struct AllServer_VolatileState;
     printf("made logfile\n");
-
     make_logfile(argv[2]);
-
-    // 時間記録用ファイル
-    // FILE *timerec;
-    // timerec = fopen("cctime.txt", "w+");
-    // if (timerec == NULL)
-    // {
-    //     printf("cannot open file\n");
-    //     exit(1);
-    // }
 
     as_ps->currentTerm = 0;
     as_ps->log.index = 0;
